@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Depresión — Guía Informativa</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --ink-muted: #6b6b6b;
+    --ink-faint: #b0afa9;
+    --accent: #3d3d3d;
+    --line: #e2e1dc;
+    --highlight: #e8e6e0;
+    --blue-soft: #5a7fa3;
+    --blue-pale: #eef2f7;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(245,244,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 0 5vw;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 5vw 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(80px, 18vw, 260px);
+    font-weight: 600;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--line);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+
+  .hero-label::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--ink-muted);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--ink);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--ink-muted);
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-stat-row {
+    display: flex; gap: 2.5rem; flex-wrap: wrap;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .stat {
+    display: flex; flex-direction: column;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    margin-top: 0.25rem;
+    max-width: 130px;
+    line-height: 1.4;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem; left: 5vw;
+    display: flex; align-items: center; gap: 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: var(--ink-faint);
+    position: relative; overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--ink-muted);
+    animation: scrollAnim 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollAnim {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 5vw;
+  }
+
+  .section-header {
+    display: flex; align-items: flex-start;
+    gap: 1.5rem; margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    padding-top: 0.35rem;
+    min-width: 30px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  /* QUÉ ES */
+  .que-es-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 1100px;
+  }
+
+  .que-es-text {
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    line-height: 1.9;
+  }
+
+  .que-es-text p + p { margin-top: 1.2rem; }
+
+  .quote-block {
+    border-left: 2px solid var(--ink);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .quote-block p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* DIFERENCIA CARD */
+  .diff-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 2rem;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+
+  .diff-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .diff-row {
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+
+  .diff-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .diff-icon.normal { background: var(--highlight); }
+  .diff-icon.dep { background: #e8e0d0; }
+
+  .diff-content strong {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .diff-content span {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* SÍNTOMAS */
+  .sintomas-section {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sintomas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    max-width: 1100px;
+  }
+
+  .sintoma-item {
+    padding: 2rem 2rem 2rem 0;
+    border-right: 1px solid var(--line);
+    position: relative;
+    cursor: default;
+    transition: background 0.3s;
+  }
+
+  .sintoma-item:last-child { border-right: none; }
+  .sintoma-item:nth-child(n+4) { border-top: 1px solid var(--line); }
+
+  .sintoma-item:hover { background: var(--bg); }
+
+  .sintoma-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .sintoma-item h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .sintoma-item p {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  .sintoma-number {
+    position: absolute;
+    top: 2rem; right: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--line);
+  }
+
+  /* TIPOS */
+  .tipos-tabs {
+    max-width: 900px;
+  }
+
+  .tab-buttons {
+    display: flex; gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    width: fit-content;
+  }
+
+  .tab-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: none;
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+    border-right: 1px solid var(--line);
+    transition: all 0.2s;
+  }
+
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn.active { background: var(--ink); color: #fff; }
+  .tab-btn:hover:not(.active) { background: var(--highlight); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeUp 0.3s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tipo-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .tipo-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .tipo-info .tipo-sub {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .tipo-desc {
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+    line-height: 1.8;
+  }
+
+  .tipo-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 0.25rem 0.75rem;
+    background: var(--highlight);
+    border-radius: 20px;
+    color: var(--ink-muted);
+  }
+
+  /* TRATAMIENTOS */
+  .trat-timeline {
+    max-width: 800px;
+    position: relative;
+  }
+
+  .trat-timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--line);
+  }
+
+  .trat-item {
+    display: flex; gap: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .trat-dot {
+    width: 41px; height: 41px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+    transition: all 0.3s;
+  }
+
+  .trat-item:hover .trat-dot {
+    background: var(--ink);
+    border-color: var(--ink);
+    filter: invert(1);
+  }
+
+  .trat-body { padding-top: 0.5rem; }
+
+  .trat-body h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .trat-body p {
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+    line-height: 1.7;
+  }
+
+  /* MITOS */
+  .mitos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+  }
+
+  .mito-card {
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+    background: var(--surface);
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .mito-card:hover { border-color: var(--ink-muted); }
+
+  .mito-top {
+    padding: 1.5rem;
+    background: var(--highlight);
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+
+  .mito-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    background: #c9887a;
+    color: #fff;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .mito-top p {
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .mito-bottom {
+    padding: 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+
+  .mito-badge.real {
+    background: #7a9e8a;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .mito-bottom p {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  /* CHART SECTION */
+  .chart-section {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .chart-wrap {
+    max-width: 800px;
+  }
+
+  .bar-chart {
+    display: flex; flex-direction: column; gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .bar-row {
+    display: flex; align-items: center; gap: 1rem;
+  }
+
+  .bar-label {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    width: 180px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--ink);
+    border-radius: 3px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .bar-val {
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: 40px;
+    color: var(--ink);
+  }
+
+  /* AYUDA */
+  .ayuda-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin-bottom: 3rem;
+  }
+
+  .ayuda-card {
+    padding: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .ayuda-card:hover {
+    border-color: var(--ink-muted);
+    transform: translateY(-2px);
+  }
+
+  .ayuda-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .ayuda-card h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .ayuda-card p {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  /* EMERGENCY BANNER */
+  .emergency {
+    background: var(--ink);
+    color: #fff;
+    padding: 3rem 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 2rem; flex-wrap: wrap;
+  }
+
+  .emergency h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .emergency p {
+    font-size: 0.85rem;
+    opacity: 0.65;
+    max-width: 500px;
+  }
+
+  .emergency-btn {
+    padding: 0.9rem 2rem;
+    background: #fff;
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+    display: inline-block;
+  }
+
+  .emergency-btn:hover { opacity: 0.85; }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 5vw;
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  footer p {
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+  }
+
+  .footer-note {
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    max-width: 400px;
+    line-height: 1.5;
+    text-align: right;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--line);
+    max-width: calc(100% - 10vw);
+    margin: 0 5vw;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: 60px; left: 0;
+    height: 2px;
+    background: var(--ink);
+    width: 0%;
+    z-index: 99;
+    transition: width 0.1s linear;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .que-es-grid { grid-template-columns: 1fr; }
+    .sintomas-grid { grid-template-columns: 1fr 1fr; }
+    .tipos-tabs .tipo-card { grid-template-columns: 1fr; gap: 1.5rem; }
+    .mitos-grid { grid-template-columns: 1fr; }
+    .ayuda-grid { grid-template-columns: 1fr; }
+    .emergency { flex-direction: column; }
+    .footer-note { text-align: left; }
+  }
+
+  @media (max-width: 480px) {
+    .sintomas-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ANIMATION */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">Mente · Clara</a>
+  <ul class="nav-links">
+    <li><a href="#que-es">Qué es</a></li>
+    <li><a href="#sintomas">Síntomas</a></li>
+    <li><a href="#tipos">Tipos</a></li>
+    <li><a href="#tratamiento">Tratamiento</a></li>
+    <li><a href="#ayuda">Ayuda</a></li>
+  </ul>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-bar" id="progress"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">depresión</div>
+  <div class="hero-content reveal">
+    <p class="hero-label">Guía informativa</p>
+    <h1>Entendiendo<br>la <em>depresión</em></h1>
+    <p class="hero-desc">
+      Una condición de salud mental real, tratable y prevalente. Esta guía ofrece información clara y basada en evidencia para comprender, identificar y abordar la depresión.
+    </p>
+    <div class="hero-stat-row">
+      <div class="stat">
+        <span class="stat-num" data-target="280">0</span><span class="stat-num">M</span>
+        <span class="stat-label">personas afectadas en el mundo</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" data-target="1">0</span><span class="stat-num">:5</span>
+        <span class="stat-label">1 de cada 5 personas la experimentará</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" data-target="80">0</span><span class="stat-num">%</span>
+        <span class="stat-label">de casos responde al tratamiento</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span class="scroll-line"></span>
+    Scroll
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUÉ ES -->
+<section id="que-es">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">¿Qué es<br>la depresión?</h2>
+  </div>
+  <div class="que-es-grid">
+    <div class="que-es-text reveal">
+      <p>La depresión es un trastorno del estado de ánimo caracterizado por sentimientos persistentes de tristeza profunda, vacío y pérdida de interés en actividades que antes eran placenteras.</p>
+      <p>No se trata de debilidad de carácter ni de algo que se pueda superar simplemente con "pensar positivo". Es una condición médica que involucra cambios en la química cerebral, los neurotransmisores y la estructura neurológica.</p>
+      <div class="quote-block">
+        <p>"La depresión no es tristeza. Es la ausencia de la capacidad de sentir."</p>
+      </div>
+      <p>Afecta cómo una persona piensa, siente y maneja las actividades cotidianas, incluyendo dormir, comer o trabajar.</p>
+    </div>
+    <div class="diff-card reveal">
+      <span class="diff-label">Tristeza normal vs. Depresión</span>
+      <div class="diff-row">
+        <div class="diff-icon normal">😔</div>
+        <div class="diff-content">
+          <strong>Tristeza situacional</strong>
+          <span>Respuesta a un evento difícil. Temporal, mejora con el tiempo y no interfiere permanentemente con la vida diaria.</span>
+        </div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-icon dep">🌑</div>
+        <div class="diff-content">
+          <strong>Depresión clínica</strong>
+          <span>Persiste 2+ semanas, ocurre sin causa aparente, afecta funciones básicas como dormir, comer y trabajar.</span>
+        </div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-icon normal">⏳</div>
+        <div class="diff-content">
+          <strong>Duelo</strong>
+          <span>Proceso natural ante una pérdida. Puede coexistir con la depresión pero no son lo mismo.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SÍNTOMAS -->
+<section id="sintomas" class="sintomas-section">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Señales y<br>síntomas</h2>
+  </div>
+  <div class="sintomas-grid reveal">
+    <div class="sintoma-item">
+      <span class="sintoma-number">1</span>
+      <span class="sintoma-icon">🌫</span>
+      <h3>Estado de ánimo deprimido</h3>
+      <p>Tristeza persistente, vacío o desesperanza la mayor parte del día, casi todos los días.</p>
+    </div>
+    <div class="sintoma-item">
+      <span class="sintoma-number">2</span>
+      <span class="sintoma-icon">🌿</span>
+      <h3>Pérdida de interés</h3>
+      <p>Anhedonia: incapacidad de disfrutar actividades que antes generaban placer.</p>
+    </div>
+    <div class="sintoma-item">
+      <span class="sintoma-number">3</span>
+      <span class="sintoma-icon">🛌</span>
+      <h3>Cambios en el sueño</h3>
+      <p>Insomnio o hipersomnia. Dificultad para conciliar el sueño o dormir en exceso.</p>
+    </div>
+    <div class="sintoma-item">
+      <span class="sintoma-number">4</span>
+      <span class="sintoma-icon">🧠</span>
+      <h3>Dificultad cognitiva</h3>
+      <p>Problemas para concentrarse, recordar cosas o tomar decisiones cotidianas.</p>
+    </div>
+    <div class="sintoma-item">
+      <span class="sintoma-number">5</span>
+      <span class="sintoma-icon">⚡</span>
+      <h3>Fatiga constante</h3>
+      <p>Cansancio y pérdida de energía que no mejora con el descanso.</p>
+    </div>
+    <div class="sintoma-item">
+      <span class="sintoma-number">6</span>
+      <span class="sintoma-icon">💭</span>
+      <h3>Pensamientos oscuros</h3>
+      <p>Pensamientos recurrentes de muerte, inutilidad o culpa excesiva e inapropiada.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIPOS -->
+<section id="tipos">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Tipos de<br>depresión</h2>
+  </div>
+  <div class="tipos-tabs reveal">
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="showTab('mayor')">Mayor</button>
+      <button class="tab-btn" onclick="showTab('persistente')">Persistente</button>
+      <button class="tab-btn" onclick="showTab('bipolar')">Bipolar</button>
+      <button class="tab-btn" onclick="showTab('estacional')">Estacional</button>
+    </div>
+    <div id="tab-mayor" class="tab-content active">
+      <div class="tipo-card">
+        <div class="tipo-info">
+          <h3>Depresión Mayor</h3>
+          <p class="tipo-sub">Trastorno Depresivo Mayor</p>
+          <div class="tipo-tags">
+            <span class="tag">Más común</span>
+            <span class="tag">Episódica</span>
+            <span class="tag">Tratable</span>
+          </div>
+        </div>
+        <div class="tipo-desc">
+          <p>Forma más frecuente. Episodios que duran al menos dos semanas con síntomas severos que interfieren significativamente con la vida diaria. Puede ocurrir una sola vez o repetirse a lo largo de la vida. Los episodios pueden ser desencadenados por eventos estresantes o aparecer sin causa aparente.</p>
+        </div>
+      </div>
+    </div>
+    <div id="tab-persistente" class="tab-content">
+      <div class="tipo-card">
+        <div class="tipo-info">
+          <h3>Distimia</h3>
+          <p class="tipo-sub">Depresión Persistente</p>
+          <div class="tipo-tags">
+            <span class="tag">Crónica</span>
+            <span class="tag">2+ años</span>
+            <span class="tag">Leve-moderada</span>
+          </div>
+        </div>
+        <div class="tipo-desc">
+          <p>Estado depresivo de baja intensidad que se mantiene durante al menos dos años. Los síntomas son menos graves que en la depresión mayor pero más duraderos. Muchas personas con distimia sienten que "siempre han sido así" sin reconocer que es un trastorno tratable.</p>
+        </div>
+      </div>
+    </div>
+    <div id="tab-bipolar" class="tab-content">
+      <div class="tipo-card">
+        <div class="tipo-info">
+          <h3>Depresión Bipolar</h3>
+          <p class="tipo-sub">Trastorno Bipolar</p>
+          <div class="tipo-tags">
+            <span class="tag">Ciclica</span>
+            <span class="tag">Manía/Depresión</span>
+            <span class="tag">Compleja</span>
+          </div>
+        </div>
+        <div class="tipo-desc">
+          <p>Parte del trastorno bipolar. Los episodios depresivos alternan con períodos de manía (euforia extrema, poca necesidad de sueño, impulsividad). Requiere tratamiento especializado diferente al de la depresión unipolar, incluyendo estabilizadores del ánimo.</p>
+        </div>
+      </div>
+    </div>
+    <div id="tab-estacional" class="tab-content">
+      <div class="tipo-card">
+        <div class="tipo-info">
+          <h3>Depresión Estacional</h3>
+          <p class="tipo-sub">Trastorno Afectivo Estacional</p>
+          <div class="tipo-tags">
+            <span class="tag">Estacional</span>
+            <span class="tag">Luz solar</span>
+            <span class="tag">Predecible</span>
+          </div>
+        </div>
+        <div class="tipo-desc">
+          <p>Patrón estacional de episodios depresivos, típicamente en otoño-invierno cuando los días tienen menos luz solar. Se relaciona con cambios en el ritmo circadiano y la melatonina. El tratamiento incluye fototerapia, psicoterapia y en algunos casos medicación.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PREVALENCIA CHART -->
+<section class="chart-section">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Prevalencia<br>global</h2>
+  </div>
+  <div class="chart-wrap reveal">
+    <p style="font-size:0.85rem; color:var(--ink-muted); margin-bottom:2rem;">Porcentaje de población afectada por depresión en distintas regiones (OMS, 2023)</p>
+    <div class="bar-chart" id="barChart">
+      <div class="bar-row">
+        <span class="bar-label">Sureste Asiático</span>
+        <div class="bar-track"><div class="bar-fill" data-width="27"></div></div>
+        <span class="bar-val">27%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">América Latina</span>
+        <div class="bar-track"><div class="bar-fill" data-width="22"></div></div>
+        <span class="bar-val">22%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Europa</span>
+        <div class="bar-track"><div class="bar-fill" data-width="19"></div></div>
+        <span class="bar-val">19%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">América del Norte</span>
+        <div class="bar-track"><div class="bar-fill" data-width="18"></div></div>
+        <span class="bar-val">18%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">África</span>
+        <div class="bar-track"><div class="bar-fill" data-width="15"></div></div>
+        <span class="bar-val">15%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Medio Oriente</span>
+        <div class="bar-track"><div class="bar-fill" data-width="13"></div></div>
+        <span class="bar-val">13%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TRATAMIENTO -->
+<section id="tratamiento">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Tratamiento<br>y recuperación</h2>
+  </div>
+  <div class="trat-timeline reveal">
+    <div class="trat-item">
+      <div class="trat-dot">🩺</div>
+      <div class="trat-body">
+        <h3>Evaluación profesional</h3>
+        <p>El primer paso es hablar con un médico o psiquiatra. La evaluación descarta causas médicas (hipotiroidismo, anemia) y establece un diagnóstico preciso para un plan de tratamiento personalizado.</p>
+      </div>
+    </div>
+    <div class="trat-item">
+      <div class="trat-dot">💬</div>
+      <div class="trat-body">
+        <h3>Psicoterapia</h3>
+        <p>La Terapia Cognitivo-Conductual (TCC) es el enfoque más estudiado. Ayuda a identificar y cambiar patrones de pensamiento negativos. Otras opciones incluyen la terapia interpersonal y la terapia de activación conductual.</p>
+      </div>
+    </div>
+    <div class="trat-item">
+      <div class="trat-dot">💊</div>
+      <div class="trat-body">
+        <h3>Medicación</h3>
+        <p>Los antidepresivos (ISRS, IRSN) ayudan a equilibrar los neurotransmisores. Requieren 2-4 semanas para mostrar efecto. Se usan siempre bajo supervisión médica y combinados con psicoterapia para mejores resultados.</p>
+      </div>
+    </div>
+    <div class="trat-item">
+      <div class="trat-dot">🌱</div>
+      <div class="trat-body">
+        <h3>Cambios de estilo de vida</h3>
+        <p>Ejercicio regular (30 min/día), higiene del sueño, dieta equilibrada y reducción del alcohol tienen evidencia científica sólida como complementos al tratamiento clínico.</p>
+      </div>
+    </div>
+    <div class="trat-item">
+      <div class="trat-dot">🤝</div>
+      <div class="trat-body">
+        <h3>Red de apoyo</h3>
+        <p>El apoyo social es un factor protector fundamental. Grupos de apoyo, conexión familiar y relaciones de calidad contribuyen significativamente a la recuperación y prevención de recaídas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MITOS -->
+<section>
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Mitos y<br>realidades</h2>
+  </div>
+  <div class="mitos-grid reveal">
+    <div class="mito-card">
+      <div class="mito-top">
+        <span class="mito-badge">Mito</span>
+        <p>"La depresión es solo tristeza o flojera."</p>
+      </div>
+      <div class="mito-bottom">
+        <span class="mito-badge real">Realidad</span>
+        <p>Es un trastorno neurobiológico que involucra cambios en la química y estructura del cerebro. No es una elección ni una debilidad.</p>
+      </div>
+    </div>
+    <div class="mito-card">
+      <div class="mito-top">
+        <span class="mito-badge">Mito</span>
+        <p>"Si no tienes motivos, no puedes estar deprimido."</p>
+      </div>
+      <div class="mito-bottom">
+        <span class="mito-badge real">Realidad</span>
+        <p>La depresión puede aparecer sin una causa externa aparente, debido a factores genéticos, hormonales o biológicos.</p>
+      </div>
+    </div>
+    <div class="mito-card">
+      <div class="mito-top">
+        <span class="mito-badge">Mito</span>
+        <p>"Hablar de suicidio lo incita o empeora."</p>
+      </div>
+      <div class="mito-bottom">
+        <span class="mito-badge real">Realidad</span>
+        <p>Hablar abiertamente sobre pensamientos suicidas reduce el riesgo. El silencio es más peligroso que la conversación.</p>
+      </div>
+    </div>
+    <div class="mito-card">
+      <div class="mito-top">
+        <span class="mito-badge">Mito</span>
+        <p>"Los antidepresivos cambian la personalidad."</p>
+      </div>
+      <div class="mito-bottom">
+        <span class="mito-badge real">Realidad</span>
+        <p>Los antidepresivos correctamente prescritos ayudan a restaurar el funcionamiento normal sin alterar quien eres.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AYUDA -->
+<section id="ayuda">
+  <div class="section-header reveal">
+    <span class="section-num">07</span>
+    <h2 class="section-title">¿Cómo<br>pedir ayuda?</h2>
+  </div>
+  <div class="ayuda-grid reveal">
+    <div class="ayuda-card">
+      <span class="ayuda-icon">📞</span>
+      <h3>Línea de crisis</h3>
+      <p>En México: SAPTEL 55 5259-8121 disponible las 24 horas, los 365 días del año. Atención emocional gratuita.</p>
+    </div>
+    <div class="ayuda-card">
+      <span class="ayuda-icon">🏥</span>
+      <h3>Servicios de salud</h3>
+      <p>El IMSS, ISSSTE y centros de salud públicos ofrecen atención psiquiátrica. Puedes solicitar una consulta con tu médico familiar.</p>
+    </div>
+    <div class="ayuda-card">
+      <span class="ayuda-icon">💻</span>
+      <h3>Telepsicología</h3>
+      <p>Plataformas digitales permiten acceder a terapia desde casa. Muchas ofrecen tarifas reducidas o atención subsidiada.</p>
+    </div>
+  </div>
+  <div class="reveal" style="max-width:600px; padding: 2rem; background: var(--blue-pale); border-radius: 2px; border-left: 3px solid var(--blue-soft);">
+    <p style="font-size:0.85rem; color:#3d5a78; line-height:1.7;">
+      <strong style="display:block; margin-bottom:0.5rem;">Si estás en una situación de emergencia:</strong>
+      Acude al servicio de urgencias más cercano o llama a los servicios de emergencia (911 en México). No estás solo — pedir ayuda es el acto más valiente.
+    </p>
+  </div>
+</section>
+
+<!-- EMERGENCY BANNER -->
+<div class="emergency">
+  <div>
+    <h2>¿Necesitas hablar ahora?</h2>
+    <p>Si estás experimentando una crisis emocional, hay personas capacitadas listas para escucharte en este momento.</p>
+  </div>
+  <a href="tel:555259-8121" class="emergency-btn">Llamar a SAPTEL</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 JSProgament</p>
+  <p class="footer-note">Esta página es de carácter informativo y no reemplaza la consulta con un profesional de la salud mental. Si estás en crisis, busca ayuda especializada.</p>
+</footer>
+
+<script>
+  // PROGRESS BAR
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('progress').style.width = progress + '%';
+  });
+
+  // REVEAL ON SCROLL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // TABS
+  function showTab(id) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // BAR CHART ANIMATION
+  const barObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('.bar-fill').forEach(bar => {
+        const w = bar.getAttribute('data-width');
+        setTimeout(() => bar.style.width = w + '%', 300);
+      });
+      barObserver.disconnect();
+    }
+  }, { threshold: 0.5 });
+  barObserver.observe(document.getElementById('barChart'));
+
+  // COUNTER ANIMATION
+  function animateCounter(el, target, suffix='') {
+    let current = 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) { current = target; clearInterval(timer); }
+      el.textContent = Math.round(current);
+    }, 25);
+  }
+
+  const statObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('[data-target]').forEach(el => {
+        animateCounter(el, parseInt(el.getAttribute('data-target')));
+      });
+      statObserver.disconnect();
+    }
+  }, { threshold: 0.5 });
+  statObserver.observe(document.querySelector('.hero-stat-row'));
+</script>
+</body>
+</html>
